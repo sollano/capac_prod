@@ -35,6 +35,7 @@
 ## Primeiro carrega-se os pacotes que serão utilizados:
 library(tidyverse)
 library(readxl)
+library(ggplot2)
 
 ## Carrega-se os dados do excel utilizando readxl
 dados <- read_excel("dados.xlsx")
@@ -165,11 +166,11 @@ intervalo
 ## Primeiro utiliza-se o limite inferior como base:
 c1 <- data.frame(nivel = c("inf","sup"), 
                  
-                 limites = c(round(floor(lim_inf), -1) , 
-                             round(floor(lim_inf), -1) + intervalo), 
+                 limites = c(round(floor(lim_inf), 0) , 
+                             round(floor(lim_inf), 0) + intervalo), 
                  
-                 fator = c(round(floor(lim_inf), -1) / HD_EST_II,
-                           (round(floor(lim_inf), -1) + intervalo ) / HD_EST_II )  )
+                 fator = c(round(floor(lim_inf), 0) / HD_EST_II,
+                           (round(floor(lim_inf), 0) + intervalo ) / HD_EST_II )  )
 c1
 
 ## Agora o limite inferior da próxima classe será igual 
@@ -237,11 +238,11 @@ list
 ## irão se iniciar utilizando o primeiro elemento da lista.
 list[[1]] <- data.frame(nivel = c("inf","sup"), 
                         
-                        limites = c(round(floor(lim_inf), -1) , 
-                                    round(floor(lim_inf), -1) + intervalo), 
+                        limites = c(round(floor(lim_inf), 0) , 
+                                    round(floor(lim_inf), 0) + intervalo), 
                         
-                        fator = c(round(floor(lim_inf), -1) / HD_EST_II,
-                                  (round(floor(lim_inf), -1) + intervalo ) / HD_EST_II )  )
+                        fator = c(round(floor(lim_inf), 0) / HD_EST_II,
+                                  (round(floor(lim_inf), 0) + intervalo ) / HD_EST_II )  )
 
 ## Agora aplica-se o loop. No loop for (para), se determina uma  variável,
 ## chamada de "i" neste caso, que representa a posição
