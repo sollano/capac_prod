@@ -35,7 +35,6 @@
 ## Primeiro carrega-se os pacotes que serão utilizados:
 library(tidyverse)
 library(readxl)
-library(ggplot2)
 
 ## Carrega-se os dados do excel utilizando readxl
 dados <- read_excel("dados.xlsx")
@@ -159,25 +158,35 @@ nc <- 5
 intervalo <- ceiling(  (lim_sup - lim_inf ) / nc  )
 intervalo
 
+mround <- function(x,base){ 
+  base*round(x/base) 
+} 
+
 ## A seguir, serão calculados os limites inferior e superior para todas as classes;
 ## serão criados varios dataframes, um para cada classe, que serão unidos em seguida por rbind.
 ## os dataframes serão compostos por 3 colunas: nível, limites, e fator.
 
 ## Primeiro utiliza-se o limite inferior como base:
-c1 <- data.frame(nivel = c("inf","sup"), 
+c1 <- data.frame(
+                 classe = as.character(as.roman(1)),
+  
+                 nivel = c("inf","sup"), 
                  
-                 limites = c(round(floor(lim_inf), 0) , 
-                             round(floor(lim_inf), 0) + intervalo), 
+                 limites = c(mround(floor(lim_inf), 5) , 
+                             mround(floor(lim_inf), 5) + intervalo), 
                  
-                 fator = c(round(floor(lim_inf), 0) / HD_EST_II,
-                           (round(floor(lim_inf), 0) + intervalo ) / HD_EST_II )  )
+                 fator = c(mround(floor(lim_inf), 5) / HD_EST_II,
+                           (mround(floor(lim_inf), 5) + intervalo ) / HD_EST_II )  )
 c1
 
 ## Agora o limite inferior da próxima classe será igual 
 ## ao limite superior da classe anterior, portanto:
 
-c2 <- data.frame(nivel = c("inf","sup"), 
-                 
+c2 <- data.frame(
+                 classe = as.character(as.roman(2)),
+  
+                 nivel = c("inf","sup"), 
+  
                  limites = c(c1$limites[2], 
                              c1$limites[2] + intervalo), 
                  
@@ -186,8 +195,11 @@ c2 <- data.frame(nivel = c("inf","sup"),
 c2
 
 ## e assim sucessivamente, ate atingir-se o número de classes desejado:
-c3 <- data.frame(nivel = c("inf","sup"), 
-                 
+c3 <- data.frame(
+                 classe = as.character(as.roman(3)),
+  
+                 nivel = c("inf","sup"), 
+  
                  limites = c(c2$limites[2], 
                              c2$limites[2] + intervalo), 
                  
@@ -195,8 +207,11 @@ c3 <- data.frame(nivel = c("inf","sup"),
                            (c2$limites[2]  + intervalo ) / HD_EST_II )  )
 c3
 
-c4 <- data.frame(nivel = c("inf","sup"), 
-                 
+c4 <- data.frame(
+                 classe = as.character(as.roman(4)),
+  
+                 nivel = c("inf","sup"), 
+  
                  limites = c(c3$limites[2], 
                              c3$limites[2] + intervalo), 
                  
@@ -204,8 +219,11 @@ c4 <- data.frame(nivel = c("inf","sup"),
                            (c3$limites[2]  + intervalo ) / HD_EST_II )  )
 c4
 
-c5 <- data.frame(nivel = c("inf","sup"), 
-                 
+c5 <- data.frame(
+                 classe = as.character(as.roman(5)),
+  
+                 nivel = c("inf","sup"), 
+  
                  limites = c(c4$limites[2], 
                              c4$limites[2] + intervalo), 
                  
@@ -236,13 +254,16 @@ list
 ## e são salvos no primeiro elemento da lista:
 ## Isto é importante e e feito separadamente, pois os calculos feitos no loop
 ## irão se iniciar utilizando o primeiro elemento da lista.
-list[[1]] <- data.frame(nivel = c("inf","sup"), 
+list[[1]] <- data.frame(
+                        classe = as.character(as.roman(1)),
+  
+                        nivel = c("inf","sup"), 
                         
-                        limites = c(round(floor(lim_inf), 0) , 
-                                    round(floor(lim_inf), 0) + intervalo), 
+                        limites = c(mround(floor(lim_inf), 5) , 
+                                    mround(floor(lim_inf), 5) + intervalo), 
                         
-                        fator = c(round(floor(lim_inf), 0) / HD_EST_II,
-                                  (round(floor(lim_inf), 0) + intervalo ) / HD_EST_II )  )
+                        fator = c(mround(floor(lim_inf), 5) / HD_EST_II,
+                                  (mround(floor(lim_inf), 5) + intervalo ) / HD_EST_II )  )
 
 ## Agora aplica-se o loop. No loop for (para), se determina uma  variável,
 ## chamada de "i" neste caso, que representa a posição
@@ -269,12 +290,13 @@ list[[1]]
 ## O processo então é repetido para as demais classes.
 for(i in 2:(nc)){
   
-  list[[i]] <-   data.frame(nivel = c("inf","sup"), 
-                            limites = c(list[[i-1]] [[2]] [[2]], 
-                                        list[[i-1]] [[2]] [[2]] + intervalo), 
+  list[[i]] <-   data.frame(classe = as.character(as.roman(i)),
+                            nivel = c("inf","sup"), 
+                            limites = c(list[[i-1]] [[3]] [[2]], 
+                                        list[[i-1]] [[3]] [[2]] + intervalo), 
                             
-                            fator = c(list[[i-1]] [[2]] [[2]] / HD_EST_II,
-                                      (list[[i-1]] [[2]] [[2]]+ intervalo ) / HD_EST_II )  )
+                            fator = c(list[[i-1]] [[3]] [[2]] / HD_EST_II,
+                                      (list[[i-1]] [[3]] [[2]]+ intervalo ) / HD_EST_II )  )
   
 }
 
@@ -327,6 +349,19 @@ curvas <- ggplot(tab_curva ) +  # cria-se a base para o grafico
     axis.text    = element_text(size = 12))
 curvas
 
-## # 5) Exportar graficos ####
+## # 5) Converter tabela dos limites para o padrão ####
+
+tab_curva_cor <- tab_curva %>% 
+  unite(C, classe, nivel) %>% 
+  select(idade,C, HD_CURVA)%>% 
+  group_by(idade,C) %>%  
+  mutate(aux=row_number()) %>% 
+  spread(C, HD_CURVA, sep = "_")%>% 
+  summarise_at(vars(contains("_")),mean)
+
+tab_curva_cor
+
+## # 5) Exportar resultados ####
 
 ggsave("curvas.png", curvas, width = 12,height = 8)
+write.csv2(tab_curva_cor, "tab_curva_cor.csv", row.names = F)
