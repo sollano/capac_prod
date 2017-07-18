@@ -365,3 +365,7 @@ tab_curva_cor
 
 ggsave("curvas.png", curvas, width = 12,height = 8)
 write.csv2(tab_curva_cor, "tab_curva_cor.csv", row.names = F)
+
+## # 6) Utilizando o pacote forestr ####
+
+forestr::curva_guia(dados, "HD", "idade", 72, 5)
