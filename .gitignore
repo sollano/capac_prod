@@ -1,5 +1,4 @@
 #
-/*.Rproj
 /*.png
 excel
 metodo_old
@@ -80,3 +79,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.Rproj.user
