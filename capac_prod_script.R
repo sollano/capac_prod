@@ -69,7 +69,7 @@ dados$INV_I <- 1/dados$idade
 
 reg <- lm(LN_HD ~ INV_I, dados)
 
-## resumo sobre a regressã:
+## resumo sobre a regressão:
 summary(reg)
 
 ## 
@@ -369,4 +369,7 @@ write.csv2(tab_curva_cor, "tab_curva_cor.csv", row.names = F)
 ## # 6) Utilizando o pacote forestr ####
 
 forestr::curva_guia(dados, "HD", "idade", 72, 5)
+forestr::curva_guia(dados, "HD", "idade", 72, 5, round_classes = T)
+forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Curtis")
 forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Chapman-Richards")
+forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Bailey-Clutter")
