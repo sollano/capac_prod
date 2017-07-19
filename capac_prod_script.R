@@ -343,10 +343,10 @@ curvas <- ggplot(tab_curva ) +  # cria-se a base para o grafico
   labs(x = "Idade (meses)",
        y = "Altura dominante (m)",
        color = "Site") +
-  guides(color= guide_legend(reverse = T)) + 
-  theme(  #com theme muda-se o tamanho e estilo de letra de cada parte do grafico
-    axis.title   = element_text(size = 14), 
-    axis.text    = element_text(size = 12))
+  guides(color= guide_legend( nrow = 1)) + 
+  theme(legend.position = "bottom",  #com theme muda-se o tamanho e estilo de letra de cada parte do grafico
+        axis.title   = element_text(size = 14), 
+        axis.text    = element_text(size = 12))
 curvas
 
 ## # 5) Converter tabela dos limites para o padrão ####
