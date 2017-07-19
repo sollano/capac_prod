@@ -353,7 +353,7 @@ curvas
 
 tab_curva_cor <- tab_curva %>% 
   unite(C, classe, nivel) %>% 
-  select(idade,C, HD_CURVA)%>% 
+  select(idade,C, HD_EST, HD_CURVA)%>% 
   group_by(idade,C) %>%  
   mutate(aux=row_number()) %>% 
   spread(C, HD_CURVA, sep = "_")%>% 
@@ -369,3 +369,4 @@ write.csv2(tab_curva_cor, "tab_curva_cor.csv", row.names = F)
 ## # 6) Utilizando o pacote forestr ####
 
 forestr::curva_guia(dados, "HD", "idade", 72, 5)
+forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Chapman-Richards")
