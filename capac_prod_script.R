@@ -372,4 +372,8 @@ forestr::curva_guia(dados, "HD", "idade", 72, 5)
 forestr::curva_guia(dados, "HD", "idade", 72, 5, round_classes = T)
 forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Curtis")
 forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Chapman-Richards")
+<<<<<<< HEAD
 forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Bailey-Clutter")
+=======
+forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Bailey-Clutter")
+>>>>>>> e7e651d9e8ae194cb1ffa3ff84222004fb7aa50d
