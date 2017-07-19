@@ -158,10 +158,6 @@ nc <- 5
 intervalo <- ceiling(  (lim_sup - lim_inf ) / nc  )
 intervalo
 
-mround <- function(x,base){ 
-  base*round(x/base) 
-} 
-
 ## A seguir, serão calculados os limites inferior e superior para todas as classes;
 ## serão criados varios dataframes, um para cada classe, que serão unidos em seguida por rbind.
 ## os dataframes serão compostos por 3 colunas: nível, limites, e fator.
@@ -172,11 +168,11 @@ c1 <- data.frame(
   
                  nivel = c("inf","sup"), 
                  
-                 limites = c(mround(floor(lim_inf), 5) , 
-                             mround(floor(lim_inf), 5) + intervalo), 
+                 limites = c(round(floor(lim_inf), 0) , 
+                             round(floor(lim_inf), 0) + intervalo), 
                  
-                 fator = c(mround(floor(lim_inf), 5) / HD_EST_II,
-                           (mround(floor(lim_inf), 5) + intervalo ) / HD_EST_II )  )
+                 fator = c(round(floor(lim_inf), 0) / HD_EST_II,
+                           (round(floor(lim_inf), 0) + intervalo ) / HD_EST_II )  )
 c1
 
 ## Agora o limite inferior da próxima classe será igual 
@@ -259,11 +255,11 @@ list[[1]] <- data.frame(
   
                         nivel = c("inf","sup"), 
                         
-                        limites = c(mround(floor(lim_inf), 5) , 
-                                    mround(floor(lim_inf), 5) + intervalo), 
+                        limites = c(round(floor(lim_inf), 0) , 
+                                    round(floor(lim_inf), 0) + intervalo), 
                         
-                        fator = c(mround(floor(lim_inf), 5) / HD_EST_II,
-                                  (mround(floor(lim_inf), 5) + intervalo ) / HD_EST_II )  )
+                        fator = c(round(floor(lim_inf), 0) / HD_EST_II,
+                                  (round(floor(lim_inf), 0) + intervalo ) / HD_EST_II )  )
 
 ## Agora aplica-se o loop. No loop for (para), se determina uma  variável,
 ## chamada de "i" neste caso, que representa a posição
