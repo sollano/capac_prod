@@ -67,5 +67,5 @@ dados2 <- full_join(dados, tab_coef)
 nls_table(dados2,Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2, 
           mod_start = c( b0=mean(.$b0), b1=mean(.$b1), b2 = mean(.$b2) ),
           "talhao",
-          replace = T )
+          replace = F )
 
