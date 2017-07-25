@@ -26,7 +26,6 @@ tidy_ <- function(x) {
   safe_nls <- safely(nls)
   q_nls <-  quietly(nls)
   pos_tidy <- possibly(tidy_, data.frame(1))
-  pos_glance <- possibly(glance_, data.frame(1))
   pos_resid <- possibly(resid, data.frame(1))
   
   dados$A <- "dummy"
@@ -59,13 +58,27 @@ nls_table(dados,Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2,
 
 tab_coef <- data.frame(talhao = c(1:20, 24,25,27,28,30,31,33,35,36,37), 
                        rbind(data.frame(b0 = rep(23, 20), b1 = rep(0.03, 20), b2 = rep(1.3, 20) ), 
-                             data.frame(b0 = rep(23, 10), b1 = rep(0.03, 10), b2 = rep(1, 10) )  )  )
-
-dados2 <- full_join(dados, tab_coef)
+                             data.frame(b0 = rep(23, 10), b1 = rep(0.03, 10), b2 = rep(.5, 10) )  )  )
 
 
-nls_table(dados2,Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2, 
-          mod_start = c( b0=mean(.$b0), b1=mean(.$b1), b2 = mean(.$b2) ),
+nls_table(dados, Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2, 
+          mod_start = tab_coef ,
           "talhao",
           replace = F )
 
+
+nls_table(dados, Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2, 
+          mod_start = tab_coef ,
+          "talhao",
+          replace = T )
+
+
+nls_table(dados,Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2, 
+          mod_start = tab_coef ,
+          "talhao", 
+          output = "merge" )
+
+nls_table(dados,Hd1 ~ b0 * (1 - exp(1)^( -b1 * Id )  )^b2, 
+          mod_start = tab_coef ,
+          "talhao",
+          output = "nest" )
