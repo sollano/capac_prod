@@ -362,10 +362,10 @@ tab_curva_cor
 ggsave("curvas.png", curvas, width = 12,height = 8)
 write.csv2(tab_curva_cor, "tab_curva_cor.csv", row.names = F)
 
-## # 6) Utilizando o pacote forestr ####
+## # 6) Utilizando o pacote forestmangr ####
 
-forestr::curva_guia(dados, "HD", "idade", 72, 5)
-forestr::curva_guia(dados, "HD", "idade", 72, 5, round_classes = T)
-forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Curtis")
-forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Chapman-Richards")
-forestr::curva_guia(dados, "HD", "idade", 72, 5, model = "Bailey-Clutter")
+forestmangr::curva_guia(dados, "HD", "idade", 72, 5)
+forestmangr::curva_guia(dados, "HD", "idade", 72, 5, round_classes = T)
+forestmangr::curva_guia(dados, "HD", "idade", 72, 5, model = "Curtis")
+forestmangr::curva_guia(dados, "HD", "idade", 72, 5, model = "Chapman-Richards")
+forestmangr::curva_guia(dados, "HD", "idade", 72, 5, model = "Bailey-Clutter")
